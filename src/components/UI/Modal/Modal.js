@@ -16,8 +16,9 @@ const Modal = (props) => (
         {props.children}
       </div>
   </Aux>
-  // </Backdrop>
 );
 
 
-export default Modal;
+export default React.memo(Modal, (prevProps, nextProps) => {
+  return nextProps.show === prevProps.show;
+});
