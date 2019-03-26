@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import CheckoutSummary from '../../components/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
 class Checkout extends Component {
@@ -15,14 +15,14 @@ class Checkout extends Component {
   }
 
   componentDidMount () {
-     const queryParams = new URLSearchParams(this.props.location.search);
-     const salad = parseInt(queryParams.get('salad'));
-     const meat = parseInt(queryParams.get('meat'));
-     const bacon = parseInt(queryParams.get('bacon'));
-     const cheese = parseInt(queryParams.get('cheese'));
-     const totalPrice = parseFloat(queryParams.get('totalPrice'));
+    const queryParams = new URLSearchParams(this.props.location.search);
+    const salad = parseInt(queryParams.get('salad'));
+    const meat = parseInt(queryParams.get('meat'));
+    const bacon = parseInt(queryParams.get('bacon'));
+    const cheese = parseInt(queryParams.get('cheese'));
+    const totalPrice = parseFloat(queryParams.get('price'));
 
-     this.setState({ ingredients: { salad, meat, bacon, cheese }, totalPrice });
+    this.setState({ ingredients: { salad, meat, bacon, cheese }, totalPrice });
   }
 
   checkoutCancelledHandler = () => {
@@ -42,7 +42,6 @@ class Checkout extends Component {
           checkoutContinued={this.checkoutContinuedHandler}/>
         <Route
           path={`${this.props.match.path}/contact-data`}
-          // component={ContactData}
           render={() => (
             <ContactData
               ingredients={this.state.ingredients}
