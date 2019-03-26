@@ -10,7 +10,8 @@ class Checkout extends Component {
       meat: 0,
       bacon: 0,
       cheese: 0
-    }
+    },
+    totalPrice: 0
   }
 
   componentDidMount () {
@@ -19,8 +20,9 @@ class Checkout extends Component {
      const meat = parseInt(queryParams.get('meat'));
      const bacon = parseInt(queryParams.get('bacon'));
      const cheese = parseInt(queryParams.get('cheese'));
+     const totalPrice = parseFloat(queryParams.get('totalPrice'));
 
-     this.setState({ ingredients: { salad, meat, bacon, cheese } });
+     this.setState({ ingredients: { salad, meat, bacon, cheese }, totalPrice });
   }
 
   checkoutCancelledHandler = () => {
@@ -40,7 +42,12 @@ class Checkout extends Component {
           checkoutContinued={this.checkoutContinuedHandler}/>
         <Route
           path={`${this.props.match.path}/contact-data`}
-          component={ContactData}/>
+          // component={ContactData}
+          render={() => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              totalPrice={this.state.totalPrice} />
+          )} />
       </div>
     );
   }
