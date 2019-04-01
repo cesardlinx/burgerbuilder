@@ -14,16 +14,11 @@ import * as actionCreators from '../../store/actions/index';
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    error: null
   }
 
-  // componentDidMount () {  // CARGA DE INGREDIENTES
-  //   axios.get('ingredients.json').then(
-  //     response => {
-  //       // this.setState({ingredients: response.data});
-  //     }
-  //   ).catch(error => {this.setState({error})});
-  // }
+  componentDidMount () {  // CARGA DE INGREDIENTES
+    this.props.onFetchIngredients()
+  }
 
   updatePurchaseState = () => {
     const totalIngredients = Object.values({...this.props.ingredients})
@@ -58,7 +53,7 @@ class BurgerBuilder extends Component {
     // Burger Section
 
     let burgerSection = (
-      this.state.error
+      this.props.error
       ? <p style={{textAlign: 'center'}}>Ingredients cant be loaded</p>
       : <Spinner />
     );
@@ -83,8 +78,8 @@ class BurgerBuilder extends Component {
           purchaseContinued={this.purchaseContinueHandler}
           ingredients={this.props.ingredients}/>
       );
-
     }
+
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -99,7 +94,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
-    totalPrice: state.burgerBuilder.totalPrice
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error
   }
 };
 
@@ -107,6 +103,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: (ingType) => dispatch(actionCreators.addIngredient(ingType)),
     onRemoveIngredient: (ingType) => dispatch(actionCreators.removeIngredient(ingType)),
+    onFetchIngredients: () => dispatch(actionCreators.initIngredients()),
   }
 }
 
