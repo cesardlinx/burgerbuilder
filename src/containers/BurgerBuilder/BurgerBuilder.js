@@ -8,7 +8,7 @@ import axios from '../../axios';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
-import { actions } from '../../store/actions';
+import actionTypes from '../../store/actions/actionTypes';
 
 
 class BurgerBuilder extends Component {
@@ -98,19 +98,19 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: (ingType) => dispatch({
-      type: actions.ADD_INGREDIENT,
+      type: actionTypes.ADD_INGREDIENT,
       ingredientType: ingType
     }),
     onRemoveIngredient: (ingType) => dispatch({
-      type: actions.REMOVE_INGREDIENT,
+      type: actionTypes.REMOVE_INGREDIENT,
       ingredientType: ingType
     }),
 
