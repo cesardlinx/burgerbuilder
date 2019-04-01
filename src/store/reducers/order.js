@@ -1,0 +1,35 @@
+import actionTypes from '../actions/actionTypes';
+
+const initialState = {
+  orders: [],
+  isLoadingOrders: false
+};
+
+const orderReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actionTypes.PURCHASE_BURGER_START:
+      return {
+        ...state,
+        isLoadingOrders: true
+      }
+    case actionTypes.PURCHASE_BURGER_SUCCESS:
+      const newOrder = {
+        ...action.orderData,
+        id: action.orderId
+      }
+      return {
+        ...state,
+        orders: state.orders.concat(newOrder),
+        isLoadingOrders: false
+      };
+    case actionTypes.PURCHASE_BURGER_FAIL:
+      return {
+        ...state,
+        isLoadingOrders: false
+      };
+    default:
+      return state;
+  }
+};
+
+export default orderReducer;
