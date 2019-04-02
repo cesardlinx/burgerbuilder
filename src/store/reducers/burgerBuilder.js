@@ -13,51 +13,71 @@ const INGREDIENT_PRICES = {
   bacon: 0.7
 };
 
+const addIngredient = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredientType]: state.ingredients[action.ingredientType] + 1
+    },
+    totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientType]
+  };
+};
+
+const removeIngredient = (state, action) => {
+  const oldCount = state.ingredients[action.ingredientType];
+  let updatedCount;
+
+  if (oldCount) {
+    updatedCount = oldCount - 1;
+  } else {
+    updatedCount = oldCount;
+  }
+
+  return {
+    ...state,
+    ingredients: {
+      ...state.ingredients,
+      [action.ingredientType]: updatedCount
+    },
+    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientType]
+  };
+};
+
+const fetchIngredients = (state, action) => {
+  return {
+    ...state,
+    ingredients: {
+      salad: action.ingredients.salad,
+      bacon: action.ingredients.bacon,
+      cheese: action.ingredients.cheese,
+      meat: action.ingredients.meat,
+    },
+    totalPrice: 4
+  };
+};
+
+const setError = (state) => {
+  return {
+    ...state,
+    error: true
+  };
+}
+
 const burgerBuilderReducer = (state=initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientType]: state.ingredients[action.ingredientType] + 1
-        },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientType]
-      }
+      return addIngredient(state, action);
+
     case actionTypes.REMOVE_INGREDIENT:
-      const oldCount = state.ingredients[action.ingredientType];
-      let updatedCount;
+      return removeIngredient(state, action);
 
-      if (oldCount) {
-        updatedCount = oldCount - 1;
-      } else {
-        updatedCount = oldCount;
-      }
-
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientType]: updatedCount
-        },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientType]
-      }
     case actionTypes.FETCH_INGREDIENTS:
-      return {
-        ...state,
-        ingredients: {
-          salad: action.ingredients.salad,
-          bacon: action.ingredients.bacon,
-          cheese: action.ingredients.cheese,
-          meat: action.ingredients.meat,
-        },
-        totalPrice: 4
-      }
+      return fetchIngredients(state, action);
+
     case actionTypes.SET_ERROR:
-      return {
-        ...state,
-        error: true
-      }
+      return setError(state);
+
     default:
       return state;
   }
