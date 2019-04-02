@@ -8,15 +8,15 @@ export const purchaseBurgerSuccess = (id, orderData) => {
     orderId: id,
     orderData
   };
-}
+};
 
 export const purchaseBurgerFail = (error) => {
   return { type: actionTypes.PURCHASE_BURGER_FAIL, error };
-}
+};
 
 export const purchaseBurgerStart = () => {
   return { type: actionTypes.PURCHASE_BURGER_START };
-}
+};
 
 // Asynchronous action creator
 export const purchaseBurger = (orderData) => {
@@ -28,4 +28,8 @@ export const purchaseBurger = (orderData) => {
         dispatch(purchaseBurgerFail(error));
       });
     }
-}
+};
+
+export const purchaseInit = () => {
+  return { type: actionTypes.PURCHASE_INIT };
+};
