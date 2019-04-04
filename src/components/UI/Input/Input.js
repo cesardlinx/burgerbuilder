@@ -16,15 +16,9 @@ const Input = ({
   let inputElement = null;
   const inputClasses = [classes.InputElement];
 
-  let errorFeedback = null;
 
   if (invalid && shouldValidate && touched) {
     inputClasses.push(classes.Invalid);
-    errorFeedback = errorMessages.map((message, index) => (
-      <p
-        key={index}
-        style={{textAlign: 'left', color: 'rgb(209, 40, 40)'}}>{message}</p>
-    ));
   }
 
   switch (elementType) {
@@ -74,7 +68,6 @@ const Input = ({
   return (
     <div className={classes.Input}>
       {inputElement}
-      {invalid && errorFeedback}
     </div>
   );
 };

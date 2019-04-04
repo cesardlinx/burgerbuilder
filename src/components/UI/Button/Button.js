@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const Button = ({ btnType, clicked, children, disabled}) => (
   <button
+    type="submit"
     className={[classes.Button, classes[btnType]].join(' ')}
     onClick={clicked}
     disabled={disabled}>{children}</button>
