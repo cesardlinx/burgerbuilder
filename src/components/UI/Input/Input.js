@@ -7,6 +7,7 @@ const Input = ({
     elementConfig,
     value,
     changed,
+    blured,
     invalid,
     shouldValidate,
     touched,
@@ -28,7 +29,8 @@ const Input = ({
           className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
-          onChange={changed}/>
+          onChange={changed}
+          onBlur={blured}/>
       );
       break;
 
@@ -38,7 +40,8 @@ const Input = ({
           className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
-          onChange={changed}/>
+          onChange={changed}
+          onBlur={blured}/>
       );
       break;
 
@@ -47,7 +50,8 @@ const Input = ({
         <select
           className={inputClasses.join(' ')}
           value={value}
-          onChange={changed}>
+          onChange={changed}
+          onBlur={blured}>
           {elementConfig.options.map(option => (
             <option key={option.value} value={option.value}>{option.displayValue}</option>
           ))}
@@ -61,7 +65,8 @@ const Input = ({
           className={inputClasses.join(' ')}
           {...elementConfig}
           value={value}
-          onChange={changed}/>
+          onChange={changed}
+          onBlur={blured}/>
       );
       break;
   }
