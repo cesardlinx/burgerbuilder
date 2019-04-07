@@ -122,7 +122,6 @@ class Auth extends Component {
         <Button btnType="Danger" clicked={this.handleSwitchMode}>
           SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}
         </Button>
-        <pre style={{textAlign: 'left'}}>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     );
 
