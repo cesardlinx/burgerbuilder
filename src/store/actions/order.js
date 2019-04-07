@@ -48,12 +48,13 @@ export const fetchOrdersFail = (error) => {
   return { type: actionTypes.FETCH_ORDERS_FAIL, error };
 }
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token, userId) => {
   return dispatch => {
     dispatch(fetchOrdersStart());
 
     // accessing protected resources through token
-    axios.get('/orders.json?auth=' + token ).then(
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+    axios.get('/orders.json' + queryParams ).then(
       response => {
 
         const fetchedOrders = []
