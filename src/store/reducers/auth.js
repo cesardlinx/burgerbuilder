@@ -17,9 +17,9 @@ const authStart = (state, action) => {
 const authSuccess = (state, action) => {
   return {
     ...state,
-    token: action.authData.idToken,
+    token: action.idToken,
     error: null,
-    userId: action.authData.localId,
+    userId: action.localId,
     isLoading: false
   }
 };
