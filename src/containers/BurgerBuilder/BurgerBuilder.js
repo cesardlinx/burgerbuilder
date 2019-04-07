@@ -35,7 +35,11 @@ class BurgerBuilder extends Component {
     if (this.props.isAuthenticated) {
       this.setState({purchasing: true})
     } else {
-      this.props.history.push('/auth')
+      // Not logged in so send user to login page, and redirect back to checkout after login
+      this.props.history.push({
+        pathname: '/auth',
+        search: '?next=/checkout'
+      });
     }
   }
   purchaseCancelHandler = () => {this.setState({purchasing: false})}
