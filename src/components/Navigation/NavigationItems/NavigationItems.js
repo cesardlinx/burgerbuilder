@@ -8,7 +8,7 @@ const NavigationItems = (props) => (
     {({ isAuthenticated }) => (
       <ul className={classes.NavigationItems}>
         <NavigationItem route="/" exact>Burger Builder</NavigationItem>
-        <NavigationItem route="/orders">Orders</NavigationItem>
+        {isAuthenticated && <NavigationItem route="/orders">Orders</NavigationItem>}
         {isAuthenticated
           ? <NavigationItem route="/logout">Logout</NavigationItem>
           : <NavigationItem route="/auth">Sign Up/Sign In</NavigationItem>}

@@ -8,4 +8,4 @@ export {
   purchaseInit,
   fetchOrders
 } from './order';
-export { auth, authFail } from './auth';
+export { auth, authFail, authLogout } from './auth';
