@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -88,9 +89,16 @@ class Auth extends Component {
       );
     }
 
+    // Redirect if user is authenticated
+    let authRedirect = null;
+    if (this.props.isAuthenticated) {
+      authRedirect = <Redirect to="/" />
+    }
+
     // form
     const form = (
       <div>
+        {authRedirect}
         {this.props.error && errorMessage}
         <form onSubmit={this.handleSubmit} noValidate>
           {formElementsArray.map(({ id, config }) => {
@@ -146,7 +154,8 @@ const FormikAuth = withFormik({
 const mapStateToProps = state => {
   return {
     isLoading: state.auth.isLoading,
-    error: state.auth.error
+    error: state.auth.error,
+    isAuthenticated: state.auth.token !== null
   }
 }
 
