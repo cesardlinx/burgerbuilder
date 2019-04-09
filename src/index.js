@@ -17,7 +17,11 @@ const rootReducer = combineReducers({
   auth: authReducer
 })
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+let composeEnhancers = null;
+
+if (process.env.NODE_ENV === 'development') {
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
