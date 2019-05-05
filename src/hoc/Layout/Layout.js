@@ -5,7 +5,7 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import { connect } from 'react-redux';
 
-class Layout extends Component {
+export class Layout extends Component {
 
   state = {
     showSideDrawer: false
@@ -35,6 +35,7 @@ class Layout extends Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null
