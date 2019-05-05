@@ -6,6 +6,7 @@ const Order = ({ price, ingredients }) => {
   let ingredientsArray = [];
 
   for (const key in ingredients) {
+    /* istanbul ignore else  */
     if (ingredients.hasOwnProperty(key)) {
       const ingredient = {
         name: key,

@@ -10,8 +10,7 @@ const Input = ({
     blured,
     invalid,
     shouldValidate,
-    touched,
-    errorMessages
+    touched
   }) => {
 
   let inputElement = null;
