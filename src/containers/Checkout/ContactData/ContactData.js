@@ -8,7 +8,7 @@ import * as actionCreators from '../../../store/actions/index';
 import axios from '../../../axios';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
-class ContactData extends Component {
+export class ContactData extends Component {
   state = {
     orderForm: {
       name: {
@@ -23,7 +23,6 @@ class ContactData extends Component {
         },
         valid: false,
         touched: false,
-        errorMessages: []
       },
       email: {
         elementType: 'input',
@@ -37,7 +36,6 @@ class ContactData extends Component {
         },
         valid: false,
         touched: false,
-        errorMessages: []
       },
       street: {
         elementType: 'input',
@@ -51,7 +49,6 @@ class ContactData extends Component {
         },
         valid: false,
         touched: false,
-        errorMessages: []
       },
       zipCode: {
         elementType: 'input',
@@ -67,7 +64,6 @@ class ContactData extends Component {
         },
         valid: false,
         touched: false,
-        errorMessages: []
       },
       country: {
         elementType: 'input',
@@ -81,7 +77,6 @@ class ContactData extends Component {
         },
         valid: false,
         touched: false,
-        errorMessages: []
       },
       deliveryMethod: {
         elementType: 'select',
@@ -94,7 +89,6 @@ class ContactData extends Component {
         value: 'cheapest', //  Default value
         valid: true,
         touched: false,
-        errorMessages: []
       },
     },
     isFormValid: false,
@@ -103,7 +97,6 @@ class ContactData extends Component {
   checkValidation (value, rules) {
 
     let isValid = true;
-    let errorMessages = [];
 
     if (!rules) {
       return true;
@@ -111,43 +104,27 @@ class ContactData extends Component {
 
     if (rules.required) {
       isValid = value.trim() !== '' && isValid;
-
-      if (!(value.trim() !== '')) {
-
-        errorMessages.push('This field is required.');
-      }
     }
 
     if (rules.minLength) {
       isValid = value.length >= rules.minLength && isValid;
-
-      if (!(value.length >= rules.minLength)) {
-
-        errorMessages.push(`This field has a minimum length of ${rules.minLength}`);
-      }
     }
 
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid;
-
-      if (!(value.length <= rules.maxLength)) {
-
-        errorMessages.push(`This field has a maximum length of ${rules.minLength}`);
-      }
     }
 
-    const result = { isValid, errorMessages };
-    return result;
+    return isValid;
   }
 
   inputChangedHandler = (event, inputId) => {
     const updatedOrderForm = {...this.state.orderForm}; // not deeply clone, just clones the attributes
     const updatedFormElement = {...updatedOrderForm[inputId]}; // Cloned deeply
+
     updatedFormElement.value = event.target.value;
 
     const validationResult = this.checkValidation(updatedFormElement.value, updatedFormElement.rules);
     updatedFormElement.valid = validationResult.isValid;
-    updatedFormElement.errorMessages = validationResult.errorMessages;
 
     updatedFormElement.touched = true;
 
@@ -156,6 +133,7 @@ class ContactData extends Component {
 
     let isFormValid = true;
     for (const inputId in updatedOrderForm) {
+      /* istanbul ignore else */
       if (updatedOrderForm.hasOwnProperty(inputId)) {
         const element = updatedOrderForm[inputId];
         isFormValid = element.valid && isFormValid;
@@ -170,6 +148,7 @@ class ContactData extends Component {
     const formData = {};
 
     for (const elementId in this.state.orderForm) {
+      /* istanbul ignore else */
       if (this.state.orderForm.hasOwnProperty(elementId)) {
         formData[elementId] = this.state.orderForm[elementId].value;
       }
@@ -189,6 +168,7 @@ class ContactData extends Component {
   render() {
     const formElementsArray = [];
     for (const key in this.state.orderForm) {
+      /* istanbul ignore else */
       if (this.state.orderForm.hasOwnProperty(key)) {
         const element = this.state.orderForm[key];
         formElementsArray.push({
@@ -210,8 +190,7 @@ class ContactData extends Component {
             changed={e => this.inputChangedHandler(e, id)}
             invalid={!config.valid}
             shouldValidate={config.rules}
-            touched={config.touched}
-            errorMessages={config.errorMessages}/>
+            touched={config.touched}/>
         ))}
         <Button btnType="Success" disabled={!this.state.isFormValid}>ORDER</Button>
       </form>
@@ -230,6 +209,7 @@ class ContactData extends Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
@@ -240,6 +220,7 @@ const mapStateToProps = state => {
   }
 };
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => {
   return {
     onOrderBurger: (orderData, token) => dispatch(actionCreators.purchaseBurger(orderData, token))

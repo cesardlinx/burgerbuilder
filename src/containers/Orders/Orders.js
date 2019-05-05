@@ -6,7 +6,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-class Orders extends Component {
+export class Orders extends Component {
 
   componentDidMount () {
     this.props.onFetchOrders(this.props.token, this.props.userId);
@@ -32,6 +32,7 @@ class Orders extends Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = state => {
   return {
     orders: state.order.orders,
@@ -41,6 +42,7 @@ const mapStateToProps = state => {
   };
 };
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => {
   return {
     onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId))

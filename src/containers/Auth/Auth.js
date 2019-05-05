@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().min(6).required()
 });
 
-class Auth extends Component {
+export class Auth extends Component {
 
   constructor(props) {
     super(props);
@@ -51,8 +51,9 @@ class Auth extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
+
     const values = this.props.values
-    this.validationSchema.isValid(values) // porque los values los tiene formik
+    return this.validationSchema.isValid(values) // porque los values los tiene formik
       .then(valid => {
         if (valid) {
           this.props.onAuth(values, this.state.isSignup);
@@ -71,6 +72,7 @@ class Auth extends Component {
     // flatten controls object
     const formElementsArray = [];
     for (const key in this.state.controls) {
+      /* istanbul ignore else */
       if (this.state.controls.hasOwnProperty(key)) {
         const element = this.state.controls[key];
         formElementsArray.push({
@@ -78,15 +80,6 @@ class Auth extends Component {
           config: element
         })
       }
-    }
-
-    // Error Message
-    let errorMessage = null
-
-    if (this.props.error) {
-      errorMessage = (
-        <p>{this.props.error.message}</p>
-      );
     }
 
     // Redirect if user is authenticated
@@ -102,7 +95,7 @@ class Auth extends Component {
     const form = (
       <div>
         {authRedirect}
-        {this.props.error && errorMessage}
+        {this.props.error}
         <form onSubmit={this.handleSubmit} noValidate>
           {formElementsArray.map(({ id, config }) => {
             const invalid = errors[id] && touched[id] ? true : false;
@@ -145,6 +138,7 @@ class Auth extends Component {
   }
 }
 
+/* istanbul ignore next */
 const FormikAuth = withFormik({
   mapPropsToValues: () => ({
     email: '',
@@ -153,7 +147,7 @@ const FormikAuth = withFormik({
   validationSchema
 })(Auth);
 
-
+/* istanbul ignore next */
 const mapStateToProps = state => {
   return {
     isLoading: state.auth.isLoading,
@@ -162,6 +156,7 @@ const mapStateToProps = state => {
   }
 }
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (payload, isSignup) => dispatch(actions.auth(payload, isSignup)),

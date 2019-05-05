@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false,
   }
@@ -20,7 +20,7 @@ class BurgerBuilder extends Component {
     this.props.onFetchIngredients()
   }
 
-  updatePurchaseState = () => {
+  canPurchase = () => {
     const totalIngredients = Object.values({...this.props.ingredients})
       .reduce((sum, el) => sum + el);
 
@@ -54,6 +54,7 @@ class BurgerBuilder extends Component {
     const disabledInfo = { ...this.props.ingredients };
 
     for (const key in disabledInfo) {
+      /* istanbul ignore else  */
       if (disabledInfo.hasOwnProperty(key)) {
         disabledInfo[key] = disabledInfo[key] <= 0;
       }
@@ -79,7 +80,7 @@ class BurgerBuilder extends Component {
             ingredientRemoved={this.props.onRemoveIngredient}
             disabled={disabledInfo}
             price={this.props.totalPrice}
-            purchasable={!this.updatePurchaseState()}
+            purchasable={!this.canPurchase()}
             isAuthenticated={this.props.isAuthenticated}/>
         </Aux>
       );
@@ -103,6 +104,7 @@ class BurgerBuilder extends Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
@@ -112,6 +114,7 @@ const mapStateToProps = state => {
   }
 };
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: (ingType) => dispatch(actions.addIngredient(ingType)),

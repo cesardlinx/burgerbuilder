@@ -6,7 +6,7 @@ import Logout from './containers/Auth/Logout/Logout';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
-class App extends Component {
+export class App extends Component {
 
   componentDidMount() {
     this.props.onAuthCheckState();
