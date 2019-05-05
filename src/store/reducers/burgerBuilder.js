@@ -26,12 +26,14 @@ const addIngredient = (state, action) => {
 
 const removeIngredient = (state, action) => {
   const oldCount = state.ingredients[action.ingredientType];
-  let updatedCount;
+  let updatedCount, totalPrice;
 
   if (oldCount) {
     updatedCount = oldCount - 1;
+    totalPrice = state.totalPrice - INGREDIENT_PRICES[action.ingredientType]
   } else {
     updatedCount = oldCount;
+    totalPrice = 4;
   }
 
   return {
@@ -40,7 +42,7 @@ const removeIngredient = (state, action) => {
       ...state.ingredients,
       [action.ingredientType]: updatedCount
     },
-    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientType]
+    totalPrice
   };
 };
 
@@ -65,6 +67,7 @@ const setError = (state) => {
 }
 
 const burgerBuilderReducer = (state=initialState, action) => {
+
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
       return addIngredient(state, action);
